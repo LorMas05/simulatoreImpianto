@@ -18,9 +18,15 @@ export class AppComponent implements AfterViewInit {
 
 
   /*variables that are used for logic of components view*/
+  currentTimeLabelsForChart=["15:23:30","15:24:00","15:24:30","15:25:00","15:25:30","15:26:30","15:23:30","15:23:30","15:23:30","15:23:30",]
+  currentNominalPower=24500
+  currentQTargetPercentage=0.5
+  currentPTargetPercentage=0.5
+
+
   invertersChart = {
     data: [
-        { x: ["inverter 1", "inverter 2", "inverter 3","inverter 4","inverter 5"], y: ["2000", "1600", "1800","1500","1900"], type: 'histogram', histfunc: "sum",marker:{color:"#1b81e8"}},
+        { x: ["inverter 1", "inverter 2", "inverter 3","inverter 4","inverter 5","inverter 6", "inverter 7", "inverter 8","inverter 9","inverter 10"], y: ["2000", "1600", "1800","1500","1900","1200","1400","1600","2000","1900"], type: 'histogram', histfunc: "sum",marker:{color:"#1b81e8"}},
     ],
     layout: { 
       title: 'Active power produced by any single inverter',
@@ -28,7 +34,7 @@ export class AppComponent implements AfterViewInit {
       width:document.getElementById("singleActivePowerDiv")?.style.width,
       paper_bgcolor:"transparent",
       plot_bgcolor:"transparent",
-      margin:{t:25,b:20},
+      margin:{t:25,b:30},
       font: {size: 8,color:"white"},
       xaxis: {
        showgrid:false
@@ -47,21 +53,215 @@ export class AppComponent implements AfterViewInit {
       binSize:0.5
     }
 };
-activePowerGauge=
-{
+
+timeLinePlot={
+  data: [
+      { x: this.currentTimeLabelsForChart,
+        y:[3,4,6,9,10,11],
+        fill: 'tozeroy',
+        type: 'scatter',
+        fillcolor:'#0084e4c9',
+        mode:'none'
+      },
+      { x: this.currentTimeLabelsForChart,
+        y:[15,15,15,15,15,15,15,15,15],
+      type: 'scatter',
+      mode:'lines+point',
+      marker:{color:'#fbb03b'}
+      },
+      { x: this.currentTimeLabelsForChart,
+        y:[this.currentNominalPower/1000],
+      type: 'scatter',
+      mode:'lines+point',
+      marker:{color:'transparent'}
+      },
+  ],
+  layout: { 
+    title: 'Active power of entire power plant',
+    height:document.getElementById("ActivePowerPlantPlotDiv")?.style.width,
+    width:document.getElementById("ActivePowerPlantPlotDiv")?.style.width,
+    paper_bgcolor:"transparent",
+    plot_bgcolor:"transparent",
+    margin:{t:20,b:20},
+    font: {size: 8,color:"white"},
+    xaxis: {
+      titlefont: {
+        family: 'Arial, sans-serif',
+        size: 18,
+        color: 'lightgrey'
+      },
+      showticklabels: true,
+      tickangle: 'auto',
+      tickfont: {
+        family: 'Old Standard TT, serif',
+        size: 14,
+        color: 'black'
+      },
+
+    },
+    yaxis: {
+      title: 'kW',
+      titlefont: {
+        family: 'Arial, sans-serif',
+        size: 18,
+        color: 'lightgrey'
+      },
+      showticklabels: true,
+      tickangle: 0,
+      tickfont: {
+        family: 'Old Standard TT, serif',
+        size: 14,
+        color: 'black'
+      },
+    }
+      
+  },
+  config:{
+    displayModeBar: false,
+    binSize:0.5
+  }
+};
+QPSignlas={
+  data: [
+    {   
+    },
+  ],
+  layout: {
+    title: 'Circles',
+    paper_bgcolor:"transparent",
+    plot_bgcolor:"transparent",
+    xaxis: {
+      range: [-2, 2],
+      zeroline: false
+    },
+    yaxis: {
+      range: [0, 1.3]
+    },
+    width: "500",
+    height: "500",
+    shapes: [
+      {
+        type: 'circle',
+        xref: 'x',
+        yref: 'y',
+        fillcolor: '#0084e4c9',
+        x0: -this.currentNominalPower/20000,
+        y0: -this.currentNominalPower/20000,
+        x1: this.currentNominalPower/20000,
+        y1: this.currentNominalPower/20000,
+        line: {
+          color: '#005d99',
+          width:2
+        }
+      },
+      {
+        type: 'rect',
+        xref: 'x',
+        yref: 'y',
+        fillcolor: 'transparent',
+        x0: this.currentQTargetPercentage,
+        y0: 0,
+        x1: this.currentQTargetPercentage,
+        y1: Math.sqrt((this.currentNominalPower/20000)**2-(this.currentQTargetPercentage)**2),
+        line: {
+          dash:'dot',
+          color: 'red',
+          width:1
+        }
+      },
+      {
+        type: 'rect',
+        xref: 'x',
+        yref: 'y',
+        fillcolor: 'transparent',
+        x0: -this.currentQTargetPercentage,
+        y0: 0,
+        x1: -this.currentQTargetPercentage,
+        y1: Math.sqrt((this.currentNominalPower/20000)**2-(this.currentQTargetPercentage)**2),
+        line: {
+          dash:'dot',
+          color: 'red',
+          width:1
+        }
+      },
+      {
+        type: 'rect',
+        xref: 'x',
+        yref: 'y',
+        fillcolor: 'transparent',
+        x0: -Math.sqrt((this.currentNominalPower/20000)**2-(this.currentPTargetPercentage)**2),
+        y0: this.currentPTargetPercentage,
+        x1: Math.sqrt((this.currentNominalPower/20000)**2-(this.currentPTargetPercentage)**2),
+        y1: this.currentPTargetPercentage,
+        line: {
+          color: '#fbb03b',
+          width:2
+        }
+      },
+      {
+        type: 'rect',
+        xref: 'x',
+        yref: 'y',
+        fillcolor: 'transparent',
+        x0: 0,
+        y0: 0,
+        x1: 0,
+        y1: this.currentNominalPower,
+        line: {
+          color: 'white',
+          width:3
+        }
+      },
+      {
+        type: 'rect',
+        xref: 'x',
+        yref: 'y',
+        fillcolor: 'transparent',
+        x0: -2,
+        y0: 0,
+        x1: 2,
+        y1: 0,
+        line: {
+          color: 'white',
+          width:3
+        }
+      },
+      {
+        type: 'circle',
+        xref: 'x',
+        yref: 'y',
+        fillcolor: 'transparent',
+        x0: this.currentQTargetPercentage+0.02,
+        y0: this.currentPTargetPercentage+0.02,
+        x1: this.currentQTargetPercentage-0.02,
+        y1: this.currentPTargetPercentage-0.02,
+        line: {
+          color: 'red',
+          width:3
+        }
+      }
+      
+    ]
+  },
+  config:{
+    displayModeBar: false,
+    binSize:0.5
+  }
+};
+activePowerGauge={
   data: [
     {
       domain: { x: [0, 1], y: [0, 1] },
       value: 12250,
       type: "indicator",
       mode: "gauge+number+delta",
-      delta: { reference: 12250 },
+      delta: { reference: 0 },
       gauge: {
-        axis: { range: [0, 24500],tickcolor: "#1b81e8"  },
+        axis: { range: [0, this.currentNominalPower],tickcolor: "#1b81e8"  },
         bar: { color: "#fbb03b" },
         steps: [
-          { range: [0, 12250], color: "#448bd4" },
-          { range: [12250, 24500], color: "#0f61b5" }
+          { range: [0, this.currentNominalPower/2], color: "#448bd4" },
+          { range: [this.currentNominalPower/2, this.currentNominalPower], color: "#0f61b5" }
         ],
         threshold: {
           line: { color: "#fbb03b", width: 4 },
@@ -84,13 +284,14 @@ reactivePowerGouge=
       value: 8000,
       type: "indicator",
       mode: "gauge+number+delta",
-      delta: { reference: 12250 },
+      delta: { reference: 0 },
       gauge: {
-        axis: { range: [0, 24500],tickcolor: "#1b81e8"  },
+        axis: { range: [-this.currentNominalPower, this.currentNominalPower],tickcolor: "#1b81e8"  },
         bar: { color: "#fbb03b" },
         steps: [
-          { range: [0, 12250], color: "#448bd4" },
-          { range: [12250, 24500], color: "#0f61b5" }
+          { range: [-this.currentNominalPower/2, this.currentNominalPower/2], color: "#448bd4" },
+          { range: [this.currentNominalPower/2, this.currentNominalPower], color: "#0f61b5" },
+          { range: [-this.currentNominalPower, -this.currentNominalPower/2], color: "#0f61b5" }
         ],
         threshold: {
           line: { color: "#fbb03b", width: 4 },
@@ -210,10 +411,23 @@ gaugeCommonLayout={
       this.invertersChart.layout.height=(String)((Number)(document.getElementById("singleActivePowerDiv")?.offsetHeight))
       this.invertersChart.layout.width=(String)((Number)(document.getElementById("singleActivePowerDiv")?.offsetWidth))
       let chartGaudeOlderElememt=document.getElementById("chartGaugeHolder")
+      let chartTimeLineElement=document.getElementById("ActivePowerPlantPlotDiv")
+      let QPSignlasElement=document.getElementById("QpSignalsDiv")
       if(chartGaudeOlderElememt){
         this.gaugeCommonLayout.height=(String)((Number)(chartGaudeOlderElememt.offsetHeight))
         this.gaugeCommonLayout.width=(String)((Number)(chartGaudeOlderElememt.offsetWidth)/100*28-30)
       }
+      if(chartTimeLineElement){
+        this.timeLinePlot.layout.height=(String)((Number)(chartTimeLineElement.offsetHeight))
+        this.timeLinePlot.layout.width=(String)((Number)(chartTimeLineElement.offsetWidth))
+
+      }
+      if(QPSignlasElement){
+        this.QPSignlas.layout.height=(String)((Number)(QPSignlasElement.offsetHeight))
+        this.QPSignlas.layout.width=(String)((Number)(QPSignlasElement.offsetWidth))
+
+      }
+      
     }, 0);
 
   }

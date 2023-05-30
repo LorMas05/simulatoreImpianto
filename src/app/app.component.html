@@ -62,7 +62,7 @@
         <button class="customButton noBorder">×</button>
   
       </div>
-
+      <plotly-plot [data]="QPSignlas.data" [layout]="QPSignlas.layout" [config]="QPSignlas.config"></plotly-plot>
     </div>
     <div id="ActivePowerPlantPlotDiv" class="analyticContainerDiv"  *ngIf="analyticsVisible">
       <div class="buttonHolderForMovableDiv">
@@ -70,6 +70,6 @@
         <button class="customButton noBorder">×</button>
   
       </div>
-     
+      <plotly-plot [data]="timeLinePlot.data" [layout]="timeLinePlot.layout" [config]="timeLinePlot.config"></plotly-plot>
     </div>
   </div>
