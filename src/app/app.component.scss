@@ -6,6 +6,7 @@
     top: 0px;
     left: 0px;
     background-image: url(./images/background.png);
+    overflow-y: hidden;
 }
 
 .topbar{
@@ -156,3 +157,48 @@
     left: 16%;
     color: white;
 }
+.sideComponentForSettings{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    right: 0px;
+    top: 105px;
+    background-color: #1569a7;
+    width: 400px;
+    height: 90%;
+}
+.settingsTitle{
+    color: white;
+    height: 43px;
+    border-bottom: 1px solid white;
+    width: 80%;
+    text-align: left;
+    font-size: 29px;
+    font-family: monospace;
+}
+.singleSetting{
+    margin-top: 20px;
+    color: white;
+    height: 43px;
+    width: 80%;
+    text-align: left;
+    font-size: 15px;
+    font-family: monospace;
+}
+.myslider{
+    width: 80%;
+}
+.mat-accent .mat-slider-track-fill {
+        background-color: red !important;
+    }
+
+.mat-slider-thumb-label {
+        background-color: red !important;
+
+    }
+
+.mat-slider-thumb {
+        background-color: red !important;
+    }

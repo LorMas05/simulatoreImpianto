@@ -15,13 +15,17 @@ export class AppComponent implements AfterViewInit {
   /*variables that are used for logic of components view*/
   analyticsVisible=false
   settingsVisible=false
-
+  showSettings=false
 
   /*variables that are used for logic of components view*/
   currentTimeLabelsForChart=["15:23:30","15:24:00","15:24:30","15:25:00","15:25:30","15:26:30","15:23:30","15:23:30","15:23:30","15:23:30",]
+  currentkwPerTime=[1,3,4,6,2,5]
   currentNominalPower=24500
   currentQTargetPercentage=0.5
   currentPTargetPercentage=0.5
+  currentActivePower=12250
+  currentReactivePower=8000
+  currentPF=0.45
 
 
   invertersChart = {
@@ -57,7 +61,7 @@ export class AppComponent implements AfterViewInit {
 timeLinePlot={
   data: [
       { x: this.currentTimeLabelsForChart,
-        y:[3,4,6,9,10,11],
+        y:this.currentkwPerTime,
         fill: 'tozeroy',
         type: 'scatter',
         fillcolor:'#0084e4c9',
@@ -127,7 +131,8 @@ QPSignlas={
     },
   ],
   layout: {
-    title: 'Circles',
+    title: 'QP Signals',
+    font:{size:10,color:'white'},
     paper_bgcolor:"transparent",
     plot_bgcolor:"transparent",
     xaxis: {
@@ -137,8 +142,8 @@ QPSignlas={
     yaxis: {
       range: [0, 1.3]
     },
-    width: "500",
-    height: "500",
+    width: document.getElementById("QpSignalsDiv")?.style.width,
+    height: document.getElementById("QpSignalsDiv")?.style.height,
     shapes: [
       {
         type: 'circle',
@@ -252,7 +257,7 @@ activePowerGauge={
   data: [
     {
       domain: { x: [0, 1], y: [0, 1] },
-      value: 12250,
+      value: this.currentActivePower,
       type: "indicator",
       mode: "gauge+number+delta",
       delta: { reference: 0 },
@@ -266,7 +271,7 @@ activePowerGauge={
         threshold: {
           line: { color: "#fbb03b", width: 4 },
           thickness: 0.75,
-          value: 12250
+          value: this.currentActivePower
         }
       }
     }
@@ -281,7 +286,7 @@ reactivePowerGouge=
   data: [
     {
       domain: { x: [0, 1], y: [0, 1] },
-      value: 8000,
+      value: this.currentReactivePower,
       type: "indicator",
       mode: "gauge+number+delta",
       delta: { reference: 0 },
@@ -296,7 +301,7 @@ reactivePowerGouge=
         threshold: {
           line: { color: "#fbb03b", width: 4 },
           thickness: 0.75,
-          value: 8000
+          value: this.currentReactivePower
         }
       }
     }
@@ -311,7 +316,7 @@ powerFactorGauge=
   data: [
     {
       domain: { x: [0, 1], y: [0, 1] },
-      value: 0.65,
+      value: this.currentPF,
       type: "indicator",
       mode: "gauge+number+delta",
       delta: { reference: 0 },
@@ -325,7 +330,7 @@ powerFactorGauge=
         threshold: {
           line: { color: "#fbb03b", width: 4 },
           thickness: 0.75,
-          value: 0.65
+          value: this.currentPF
         }
       }
     }
@@ -347,6 +352,9 @@ gaugeCommonLayout={
   ngAfterViewInit() {
     this.DivIdList.forEach((item)=>{this.registerDragElement(item)})
     this.DivIdList.forEach((item,index)=>{this.setInitialPositions(item,index+1)})
+    setTimeout(() => {
+      this.simulateGetData()
+    }, );
   }
 
   private registerDragElement(elementId:string) {
@@ -449,5 +457,194 @@ gaugeCommonLayout={
         currentDiv.style.left=(5).toString()+"px";
       }
     }
+  }
+  SettingsClicked(){
+    this.showSettings=!this.showSettings
+  }
+
+
+
+
+
+  /*Just Simulating*/
+  simulateGetData(){
+    this.activePowerGauge.data[0].value=this.currentActivePower
+    this.activePowerGauge.data[0].gauge.threshold.value=this.currentActivePower
+    this.reactivePowerGouge.data[0].value=this.currentReactivePower
+    this.reactivePowerGouge.data[0].gauge.threshold.value=this.currentReactivePower
+    this.powerFactorGauge.data[0].value=this.currentPF
+    this.powerFactorGauge.data[0].gauge.threshold.value=this.currentPF
+    /*refreshing qp signals*/
+    this.QPSignlas.layout={
+      title: 'QP Signals',
+      font:{size:10,color:'white'},
+      paper_bgcolor:"transparent",
+      plot_bgcolor:"transparent",
+      xaxis: {
+        range: [-2, 2],
+        zeroline: false
+      },
+      yaxis: {
+        range: [0, 1.3]
+      },
+      width: (String)((Number)( document.getElementById("QpSignalsDiv")?.offsetWidth)),
+      height:(String)((Number)( document.getElementById("QpSignalsDiv")?.offsetHeight)),
+      shapes: [
+        {
+          type: 'circle',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: -this.currentNominalPower/20000,
+          y0: -this.currentNominalPower/20000,
+          x1: this.currentNominalPower/20000,
+          y1: this.currentNominalPower/20000,
+          line: {
+            color: '#005d99',
+            width:2
+          }
+        },
+        {
+          type: 'rect',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: 'transparent',
+          x0: this.currentQTargetPercentage,
+          y0: 0,
+          x1: this.currentQTargetPercentage,
+          y1: Math.sqrt((this.currentNominalPower/20000)**2-(this.currentQTargetPercentage)**2),
+          line: {
+            dash:'dot',
+            color: 'red',
+            width:1
+          }
+        },
+        {
+          type: 'rect',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: 'transparent',
+          x0: -this.currentQTargetPercentage,
+          y0: 0,
+          x1: -this.currentQTargetPercentage,
+          y1: Math.sqrt((this.currentNominalPower/20000)**2-(this.currentQTargetPercentage)**2),
+          line: {
+            dash:'dot',
+            color: 'red',
+            width:1
+          }
+        },
+        {
+          type: 'rect',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: 'transparent',
+          x0: -Math.sqrt((this.currentNominalPower/20000)**2-(this.currentPTargetPercentage)**2),
+          y0: this.currentPTargetPercentage,
+          x1: Math.sqrt((this.currentNominalPower/20000)**2-(this.currentPTargetPercentage)**2),
+          y1: this.currentPTargetPercentage,
+          line: {
+            color: '#fbb03b',
+            width:2
+          }
+        },
+        {
+          type: 'rect',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: 'transparent',
+          x0: 0,
+          y0: 0,
+          x1: 0,
+          y1: this.currentNominalPower,
+          line: {
+            color: 'white',
+            width:3
+          }
+        },
+        {
+          type: 'rect',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: 'transparent',
+          x0: -2,
+          y0: 0,
+          x1: 2,
+          y1: 0,
+          line: {
+            color: 'white',
+            width:3
+          }
+        },
+        {
+          type: 'circle',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: 'transparent',
+          x0: this.currentQTargetPercentage+0.02,
+          y0: this.currentPTargetPercentage+0.02,
+          x1: this.currentQTargetPercentage-0.02,
+          y1: this.currentPTargetPercentage-0.02,
+          line: {
+            color: 'red',
+            width:3
+          }
+        }
+        
+      ]
+    }
+    /* end refreshinf qp signals*/
+    /*refreshing inverters Start*/
+    let newArrayOfInverters=[]
+    for(let i=0;i<10;i++){
+      newArrayOfInverters.push((String)(this.generateRandomInt(1000,2000)))
+    }
+    this.invertersChart.data[0].y=newArrayOfInverters
+    /*refreshing inverters End*/
+    let newRandomNumber=this.generateRandomInt(5,15)
+    this.currentkwPerTime.push(newRandomNumber)
+    this.currentkwPerTime.shift()
+    this.timeLinePlot.data=[
+      { x: this.currentTimeLabelsForChart,
+        y:this.currentkwPerTime,
+        fill: 'tozeroy',
+        type: 'scatter',
+        fillcolor:'#0084e4c9',
+        mode:'none'
+      },
+      { x: this.currentTimeLabelsForChart,
+        y:[15,15,15,15,15,15,15,15,15],
+      type: 'scatter',
+      mode:'lines+point',
+      marker:{color:'#fbb03b'}
+      },
+      { x: this.currentTimeLabelsForChart,
+        y:[this.currentNominalPower/1000],
+      type: 'scatter',
+      mode:'lines+point',
+      marker:{color:'transparent'}
+      },
+  ]
+
+    setTimeout(() => {
+      this.getNewData()
+    }, 300);
+    
+  }
+  getNewData(){
+    this.currentNominalPower=this.generateRandomInt(18000,20000)
+    this.currentActivePower=this.generateRandomInt(30000,this.currentNominalPower-5000)
+    this.currentReactivePower=this.generateRandomInt(8000,this.currentNominalPower-5000)
+    this.currentPF=this.generateRandomFloat(0,1)
+    this.currentPTargetPercentage=this.generateRandomFloat(0.3,1)
+    this.currentQTargetPercentage=this.generateRandomFloat(0.3,Math.sqrt((this.currentNominalPower/20000)**2-this.currentPTargetPercentage**2))
+
+    this.simulateGetData()
+  }
+  generateRandomInt(min:number,max:number){
+    return Math.floor(Math.random()*(max-min)+min)
+  }
+  generateRandomFloat(min:number,max:number){
+    return parseFloat((Math.random()*(max-min)+min).toFixed(2))
   }
 }

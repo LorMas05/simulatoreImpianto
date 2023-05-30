@@ -3,13 +3,21 @@
       <div class="wisnamLogo"></div>
       <div class="buttonContainer">
         <button class="customButton longButton" (click)="analyticsVisible=!analyticsVisible;restartDivs()">Analytics</button>
-        <button class="customButton longButton">Settings</button>
+        <button class="customButton longButton" (click)="SettingsClicked()">Settings</button>
         <button class="customButton">C</button>
         
       </div>
       
   
     </div>
+    <div *ngIf="showSettings" class="sideComponentForSettings">
+      <label class="settingsTitle">Settings</label>
+      <label class="singleSetting">Irraggiamento</label>
+      <mat-slider min="1" max="5" step="0.5" value="1.5" class="myslider">
+        <input matSliderThumb>
+      </mat-slider>
+    </div>
+
   
     <div id="singleActivePowerDiv" class="analyticContainerDiv" *ngIf="analyticsVisible">
       <div class="buttonHolderForMovableDiv">
@@ -31,7 +39,7 @@
       <div class="fakeTableHorizontal" id="chartGaugeHolder">
         <div class="textHolderVertical">
             <label style="color:white">Nominal Power</label>
-            <label style="color:white">24500.00 kW</label>
+            <label style="color:white">{{currentNominalPower}} kW</label>
         </div>
         <div class="verticalLine"></div>
         <div class="gaugeholder">
