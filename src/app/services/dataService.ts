@@ -7,7 +7,8 @@ import *as XLSX from 'xlsx'
 export class DataService {
     loopDuration=30
     GlobalData:any[]=[]
-
+    currentData:any={}
+    counter:number=0
   constructor(private httpClient: HttpClient) { }
 
   read(event:any) {
@@ -36,6 +37,18 @@ export class DataService {
 
     }
     startLoopData(){
-        console.log(this.GlobalData)
+        this.currentData=this.GlobalData[this.counter]
+        this.counter++
+        if(this.counter>this.loopDuration){this.counter=0}
+        setTimeout(() => {
+            this.reLoop() 
+        }, 500);
+        
+    }
+    reLoop(){
+        this.startLoopData()
+    }
+    getCurrentData(){
+        return this.currentData
     }
 }
