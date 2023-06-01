@@ -201,4 +201,15 @@
 
 .mat-slider-thumb {
         background-color: red !important;
-    }
+}
+
+.beforExcel{
+    background-color: rgba(85, 82, 82, 0.705);
+    height: 100%;
+    width: 100vw;
+    z-index: 100;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

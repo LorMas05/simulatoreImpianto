@@ -1,13 +1,15 @@
 import { first } from 'rxjs';
 import { AfterViewInit, Component } from '@angular/core';
-
-
+import { DataService } from './services/dataService';
+import *as XLSX from 'xlsx'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
+  constructor(private DataService: DataService) { }
+  noExcel=true
   title = 'simulatoreImpianto';
   idOfMovableItems:string[]=[]
   thirdLenght=0
@@ -647,4 +649,9 @@ gaugeCommonLayout={
   generateRandomFloat(min:number,max:number){
     return parseFloat((Math.random()*(max-min)+min).toFixed(2))
   }
+  uploadData(event:any){
+    this.DataService.read(event)
+      
+  }
+  
 }

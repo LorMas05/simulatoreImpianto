@@ -1,4 +1,7 @@
 <div class="mainContainer">
+  <div class="beforExcel" *ngIf="noExcel">
+    <input id="my-file-selector" type="file" (change)="uploadData($event);noExcel=false" name="uploadExcel">
+  </div>
     <div class="topbar">
       <div class="wisnamLogo"></div>
       <div class="buttonContainer">
