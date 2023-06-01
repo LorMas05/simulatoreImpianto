@@ -21,18 +21,19 @@ export class AppComponent implements AfterViewInit {
 
   /*variables that are used for logic of components view*/
   currentTimeLabelsForChart=["15:23:30","15:24:00","15:24:30","15:25:00","15:25:30","15:26:30","15:23:30","15:23:30","15:23:30","15:23:30",]
-  currentkwPerTime=[1,3,4,6,2,5]
+  currentkwPerTime=[0,0,0,0,0,0]
   currentNominalPower=24500
   currentQTargetPercentage=0.5
   currentPTargetPercentage=0.5
   currentActivePower=12250
   currentReactivePower=8000
   currentPF=0.45
+  currentInvertersProduction=["100","20","3","4","5","60","56","8","90","10"]
 
 
   invertersChart = {
     data: [
-        { x: ["inverter 1", "inverter 2", "inverter 3","inverter 4","inverter 5","inverter 6", "inverter 7", "inverter 8","inverter 9","inverter 10"], y: ["2000", "1600", "1800","1500","1900","1200","1400","1600","2000","1900"], type: 'histogram', histfunc: "sum",marker:{color:"#1b81e8"}},
+        { x: ["inverter 1", "inverter 2", "inverter 3","inverter 4","inverter 5","inverter 6", "inverter 7", "inverter 8","inverter 9","inverter 10"], y: this.currentInvertersProduction, type: 'histogram', histfunc: "sum",marker:{color:"#1b81e8"}},
     ],
     layout: { 
       title: 'Active power produced by any single inverter',
@@ -598,10 +599,8 @@ gaugeCommonLayout={
     /* end refreshinf qp signals*/
     /*refreshing inverters Start*/
     let newArrayOfInverters=[]
-    for(let i=0;i<10;i++){
-      newArrayOfInverters.push((String)(this.generateRandomInt(1000,2000)))
-    }
-    this.invertersChart.data[0].y=newArrayOfInverters
+
+    this.invertersChart.data[0].y=this.currentInvertersProduction
     /*refreshing inverters End*/
     let newRandomNumber=this.generateRandomInt(5,15)
     this.currentkwPerTime.push(newRandomNumber)
@@ -630,16 +629,20 @@ gaugeCommonLayout={
 
     setTimeout(() => {
       this.getNewData()
-    }, 300);
+    }, 500);
     
   }
   getNewData(){
-    this.currentNominalPower=this.generateRandomInt(18000,20000)
-    this.currentActivePower=this.generateRandomInt(30000,this.currentNominalPower-5000)
-    this.currentReactivePower=this.generateRandomInt(8000,this.currentNominalPower-5000)
+    let myData=this.DataService.getCurrentData()
+    console.log(myData)
+    this.currentInvertersProduction=[(String)(myData.InvP1),(String)(myData.InvP2),(String)(myData.InvP3),(String)(myData.InvP4),(String)(myData.InvP5),(String)(myData.InvP6),(String)(myData.InvP7),(String)(myData.InvP8),(String)(myData.InvP9),(String)(myData.InvP10)]
+    this.currentNominalPower=20000
+    this.currentActivePower=myData.P
+    this.currentReactivePower=myData.Q
     this.currentPF=this.generateRandomFloat(0,1)
-    this.currentPTargetPercentage=this.generateRandomFloat(0.3,1)
-    this.currentQTargetPercentage=this.generateRandomFloat(0.3,Math.sqrt((this.currentNominalPower/20000)**2-this.currentPTargetPercentage**2))
+    this.currentPTargetPercentage=myData.SetP
+    this.currentQTargetPercentage=myData.SetQ
+    let now=new Date()
 
     this.simulateGetData()
   }
