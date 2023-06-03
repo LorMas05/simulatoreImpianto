@@ -602,6 +602,7 @@ gaugeCommonLayout={
 
     this.invertersChart.data[0].y=this.currentInvertersProduction
     /*refreshing inverters End*/
+    let currentTarget=this.currentNominalPower*this.currentPTargetPercentage/1000
     let newRandomNumber=this.generateRandomInt(5,15)
     this.currentkwPerTime.push(newRandomNumber)
     this.currentkwPerTime.shift()
@@ -614,7 +615,7 @@ gaugeCommonLayout={
         mode:'none'
       },
       { x: this.currentTimeLabelsForChart,
-        y:[15,15,15,15,15,15,15,15,15],
+        y:[currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget],
       type: 'scatter',
       mode:'lines+point',
       marker:{color:'#fbb03b'}
