@@ -1,0 +1,144 @@
+
+.settingsTitle{
+    color: white;
+    height: 43px;
+    border-bottom: 1px solid white;
+    width: 80%;
+    text-align: left;
+    font-size: 29px;
+    font-family: monospace;
+}
+.singleSetting{
+    margin-top: 20px;
+    color: white;
+    height: 43px;
+    width: 80%;
+    text-align: left;
+    font-size: 15px;
+    font-family: monospace;
+}
+.entireContainer{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    background: white;
+    outline: none;
+    opacity: 0.8;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #0081de;
+    cursor: pointer;
+    border:10px solid white;
+  }
+  
+
+  .slidecontainer{
+    width: 80%;
+  }
+  .switchContainer{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+  .rete{
+    top: 20px;
+  }
+
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .switchSLider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .switchSLider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .switchSLider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .switchSLider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .switchSLider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded switchSLiders */
+  .switchSLider.round {
+    border-radius: 34px;
+  }
+  
+  .switchSLider.round:before {
+    border-radius: 50%;
+  }
+  .bigTitle{
+    font-size: 25px;
+  }
+  .line{
+    width: 100%;
+    height: 1px;
+    background: white;
+  }
+  .topMargin{
+    margin-top: 30px;
+  }

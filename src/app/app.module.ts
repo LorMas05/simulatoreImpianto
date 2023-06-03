@@ -8,10 +8,12 @@ import { PlotlyModule } from 'angular-plotly.js';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { SettingsComponent } from './SettingsComponent';
 PlotlyModule.plotlyjs = PlotlyJS;
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

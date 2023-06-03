@@ -1,5 +1,5 @@
 <div class="mainContainer">
-  <div class="beforExcel" *ngIf="noExcel">
+  <div class="beforExcel" *ngIf="!noExcel">
     <input id="my-file-selector" type="file" (change)="uploadData($event);noExcel=false" name="uploadExcel">
   </div>
     <div class="topbar">
@@ -14,11 +14,7 @@
   
     </div>
     <div *ngIf="showSettings" class="sideComponentForSettings">
-      <label class="settingsTitle">Settings</label>
-      <label class="singleSetting">Irraggiamento</label>
-      <mat-slider min="1" max="5" step="0.5" value="1.5" class="myslider">
-        <input matSliderThumb>
-      </mat-slider>
+      <settings-component  class="importedSettingsComponent"></settings-component>
     </div>
 
   

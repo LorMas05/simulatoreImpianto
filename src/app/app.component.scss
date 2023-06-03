@@ -169,24 +169,7 @@
     width: 400px;
     height: 90%;
 }
-.settingsTitle{
-    color: white;
-    height: 43px;
-    border-bottom: 1px solid white;
-    width: 80%;
-    text-align: left;
-    font-size: 29px;
-    font-family: monospace;
-}
-.singleSetting{
-    margin-top: 20px;
-    color: white;
-    height: 43px;
-    width: 80%;
-    text-align: left;
-    font-size: 15px;
-    font-family: monospace;
-}
+
 .myslider{
     width: 80%;
 }
@@ -213,3 +196,12 @@
     align-items: center;
     justify-content: center;
 }
+
+
+
+  .importedSettingsComponent{
+    height: 100%;
+    width: 100%;
+  }
+
+
