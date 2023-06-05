@@ -68,23 +68,26 @@ timeLinePlot={
         fill: 'tozeroy',
         type: 'scatter',
         fillcolor:'#0084e4c9',
-        mode:'none'
+        mode:'none',
+        name:"Power"
       },
       { x: this.currentTimeLabelsForChart,
         y:[15,15,15,15,15,15,15,15,15],
       type: 'scatter',
       mode:'lines+point',
-      marker:{color:'#fbb03b'}
+      marker:{color:'#fbb03b'},
+      name:"setPoint"
       },
       { x: this.currentTimeLabelsForChart,
         y:[this.currentNominalPower/1000],
       type: 'scatter',
       mode:'lines+point',
-      marker:{color:'transparent'}
+      marker:{color:'transparent'},
+      name:"0"
       },
   ],
   layout: { 
-    title: 'Active power of entire power plant',
+    title: 'Active Power ',
     height:document.getElementById("ActivePowerPlantPlotDiv")?.style.width,
     width:document.getElementById("ActivePowerPlantPlotDiv")?.style.width,
     paper_bgcolor:"transparent",
@@ -134,7 +137,7 @@ QPSignlas={
     },
   ],
   layout: {
-    title: 'QP Signals',
+    title: 'Operating Point',
     font:{size:10,color:'white'},
     paper_bgcolor:"transparent",
     plot_bgcolor:"transparent",
@@ -262,8 +265,7 @@ activePowerGauge={
       domain: { x: [0, 1], y: [0, 1] },
       value: this.currentActivePower,
       type: "indicator",
-      mode: "gauge+number+delta",
-      delta: { reference: 0 },
+      mode: "gauge+number",
       gauge: {
         axis: { range: [0, this.currentNominalPower],tickcolor: "#1b81e8"  },
         bar: { color: "#fbb03b" },
@@ -291,11 +293,10 @@ reactivePowerGouge=
       domain: { x: [0, 1], y: [0, 1] },
       value: this.currentReactivePower,
       type: "indicator",
-      mode: "gauge+number+delta",
-      delta: { reference: 0 },
+      mode: "gauge+number",
       gauge: {
         axis: { range: [-this.currentNominalPower, this.currentNominalPower],tickcolor: "#1b81e8"  },
-        bar: { color: "#fbb03b" },
+        bar: { color: "transparent" },
         steps: [
           { range: [-this.currentNominalPower/2, this.currentNominalPower/2], color: "#448bd4" },
           { range: [this.currentNominalPower/2, this.currentNominalPower], color: "#0f61b5" },
@@ -321,11 +322,10 @@ powerFactorGauge=
       domain: { x: [0, 1], y: [0, 1] },
       value: this.currentPF,
       type: "indicator",
-      mode: "gauge+number+delta",
-      delta: { reference: 0 },
+      mode: "gauge+number",
       gauge: {
-        axis: { range: [-1, 1],tickcolor: "#1b81e8"  },
-        bar: { color: "#fbb03b" },
+        axis: { range: [-1, 1],tickcolor: "#1b81e8" , showticklabels: true},
+        bar: { color: "transparent" },
         steps: [
           { range: [-1, 0], color: "#448bd4" },
           { range: [0, 1], color: "#0f61b5" }
@@ -479,7 +479,7 @@ gaugeCommonLayout={
     this.powerFactorGauge.data[0].gauge.threshold.value=this.currentPF
     /*refreshing qp signals*/
     this.QPSignlas.layout={
-      title: 'QP Signals',
+      title: 'Operating Point',
       font:{size:10,color:'white'},
       paper_bgcolor:"transparent",
       plot_bgcolor:"transparent",
@@ -612,19 +612,22 @@ gaugeCommonLayout={
         fill: 'tozeroy',
         type: 'scatter',
         fillcolor:'#0084e4c9',
-        mode:'none'
+        mode:'none',
+        name:"Power"
       },
       { x: this.currentTimeLabelsForChart,
         y:[currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget],
       type: 'scatter',
       mode:'lines+point',
-      marker:{color:'#fbb03b'}
+      marker:{color:'#fbb03b'},
+      name:"set point"
       },
       { x: this.currentTimeLabelsForChart,
         y:[this.currentNominalPower/1000],
       type: 'scatter',
       mode:'lines+point',
-      marker:{color:'transparent'}
+      marker:{color:'transparent'},
+      name:""
       },
   ]
 
