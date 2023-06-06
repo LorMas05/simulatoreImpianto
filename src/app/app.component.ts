@@ -18,7 +18,7 @@ export class AppComponent implements AfterViewInit {
   analyticsVisible=false
   settingsVisible=false
   showSettings=false
-
+  LightColorSwitch=true
   /*variables that are used for logic of components view*/
   currentTimeLabelsForChart=["starting1","starting2","starting3","starting4","starting5","starting6","starting7","starting8","starting9","starting10",]
   currentkwPerTime=[0,0,0,0,0,0,0,0,0,0]
@@ -34,7 +34,8 @@ export class AppComponent implements AfterViewInit {
 
   invertersChart = {
     data: [
-        { x: ["inverter 1", "inverter 2", "inverter 3","inverter 4","inverter 5","inverter 6", "inverter 7", "inverter 8","inverter 9","inverter 10"], y: this.currentInvertersProduction, type: 'histogram', histfunc: "sum",marker:{color:"#1b81e8"}},
+        { x: ["inverter 1", "inverter 2", "inverter 3","inverter 4","inverter 5","inverter 6", "inverter 7", "inverter 8","inverter 9","inverter 10"], y: this.currentInvertersProduction, type: 'histogram', histfunc: "sum",
+        marker:{color:["red", '"red",, "red", "red", "red"',"red","red","red","red","red"]}},
     ],
     layout: { 
       title: ' Inverters Active Power',
@@ -355,7 +356,7 @@ gaugeCommonLayout={
   title: 'Acdwd',
   paper_bgcolor:"transparent",
   plot_bgcolor:"transparent",
-  margin:{t:0,b:0,l:20,r:20},
+  margin:{t:0,b:0,l:5,r:5},
   font: { color: "darkblue", family: "Arial",size:8 }
 }
   ngAfterViewInit() {
@@ -609,6 +610,14 @@ gaugeCommonLayout={
     let newArrayOfInverters=[]
 
     this.invertersChart.data[0].y=this.currentInvertersProduction
+    if(this.LightColorSwitch==true){
+      this.invertersChart.data[0].marker.color=["#1b81e8", "dbc5c5b5","#1b81e8", "#1b81e8", "dbc5c5b5","#1b81e8","#1b81e8","#1b81e8","#1b81e8","#1b81e8"]
+      console.log("fhdjhghuj")
+    }else{
+      this.invertersChart.data[0].marker.color=["#1b81e8", "cb0c0cb5","#1b81e8", "#1b81e8","cb0c0cb5","#1b81e8","#1b81e8","#1b81e8","#1b81e8","#1b81e8"]
+      console.log("nnn")
+    }
+    this.LightColorSwitch=!this.LightColorSwitch
     /*refreshing inverters End*/
     let currentTarget=this.currentNominalPower*this.currentPTargetPercentage/1000
     let newRandomNumber=this.generateRandomInt(5,15)

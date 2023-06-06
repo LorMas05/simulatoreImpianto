@@ -41,11 +41,11 @@
       <div class="titlecontainer">Active Power of entire power plant</div>
       <div class="multiTitleContainer"><label>Active Power</label><label>Reactive Power</label><label>Power Factor</label></div>
       <div class="fakeTableHorizontal" id="chartGaugeHolder">
-        <div class="textHolderVertical">
+        <!-- <div class="textHolderVertical">
             <label style="color:white">Nominal Power</label>
             <label style="color:white">{{currentNominalPower}} kW</label>
         </div>
-        <div class="verticalLine"></div>
+        <div class="verticalLine"></div> -->
         <div class="gaugeholder">
             <plotly-plot [data]="activePowerGauge.data" [layout]="gaugeCommonLayout" [config]="activePowerGauge.config"></plotly-plot>
 
@@ -62,11 +62,11 @@
         </div>
       </div>
       <div class="horizontalFlex">
-        <label class="firstLabelWidth">Control Status</label> <label class="labelsWidth">Enabled</label><label class="labelsWidth">Enabled</label><label class="labelsWidth">Disabled</label>
+       <label class="labelsWidth">Enabled</label><label class="labelsWidth">Enabled</label><label class="labelsWidth">Disabled</label>
       </div>
-      <div class="horizontalFlex secondFlex">
+      <!-- <div class="horizontalFlex secondFlex">
         <label class="firstLabelWidth">Input Set Point</label><label class="labelsWidth">Enabled</label><label class="labelsWidth">Enabled</label><label class="labelsWidth">Disabled</label>
-      </div>
+      </div> -->
     </div>
     
     
