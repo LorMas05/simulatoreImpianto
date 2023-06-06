@@ -19,6 +19,7 @@
 
   
     <div id="singleActivePowerDiv" class="analyticContainerDiv" *ngIf="analyticsVisible">
+      <div class="coverIndex"></div>
       <div class="buttonHolderForMovableDiv">
         <button class="customButton noBorder">⋯</button>
         <button class="customButton noBorder">×</button>
@@ -27,7 +28,11 @@
       <plotly-plot [data]="invertersChart.data" [layout]="invertersChart.layout" [config]="invertersChart.config"></plotly-plot>
   
     </div>
+    
+    
     <div id="PlantActivePowerDiv" class="analyticContainerDiv" *ngIf="analyticsVisible" >
+      <div class="coverIndex"></div>
+
       <div class="buttonHolderForMovableDiv">
         <button class="customButton noBorder">⋯</button>
         <button class="customButton noBorder">×</button>
@@ -57,13 +62,16 @@
         </div>
       </div>
       <div class="horizontalFlex">
-        <label class="firstLabelWidth">Control Status</label> <label class="labelsWidth">Enable</label><label class="labelsWidth">Enable</label><label class="labelsWidth">Disable</label>
+        <label class="firstLabelWidth">Control Status</label> <label class="labelsWidth">Enabled</label><label class="labelsWidth">Enabled</label><label class="labelsWidth">Disabled</label>
       </div>
       <div class="horizontalFlex secondFlex">
-        <label class="firstLabelWidth">Input Set Point</label><label class="labelsWidth">Enable</label><label class="labelsWidth">Enable</label><label class="labelsWidth">Disable</label>
+        <label class="firstLabelWidth">Input Set Point</label><label class="labelsWidth">Enabled</label><label class="labelsWidth">Enabled</label><label class="labelsWidth">Disabled</label>
       </div>
     </div>
+    
+    
     <div id="QpSignalsDiv" class="analyticContainerDiv"  *ngIf="analyticsVisible">
+      <div class="coverIndex"></div>
       <div class="buttonHolderForMovableDiv">
         <button class="customButton noBorder">⋯</button>
         <button class="customButton noBorder">×</button>
@@ -71,7 +79,11 @@
       </div>
       <plotly-plot [data]="QPSignlas.data" [layout]="QPSignlas.layout" [config]="QPSignlas.config"></plotly-plot>
     </div>
+   
+   
     <div id="ActivePowerPlantPlotDiv" class="analyticContainerDiv"  *ngIf="analyticsVisible">
+      <div class="coverIndex"></div>
+
       <div class="buttonHolderForMovableDiv">
         <button class="customButton noBorder">⋯</button>
         <button class="customButton noBorder">×</button>

@@ -20,15 +20,16 @@ export class AppComponent implements AfterViewInit {
   showSettings=false
 
   /*variables that are used for logic of components view*/
-  currentTimeLabelsForChart=["15:23:30","15:24:00","15:24:30","15:25:00","15:25:30","15:26:30","15:23:30","15:23:30","15:23:30","15:23:30",]
-  currentkwPerTime=[0,0,0,0,0,0]
+  currentTimeLabelsForChart=["starting1","starting2","starting3","starting4","starting5","starting6","starting7","starting8","starting9","starting10",]
+  currentkwPerTime=[0,0,0,0,0,0,0,0,0,0]
   currentNominalPower=24500
   currentQTargetPercentage=0.5
   currentPTargetPercentage=0.5
   currentActivePower=12250
   currentReactivePower=8000
   currentPF=0.45
-  currentInvertersProduction=["100","20","3","4","5","60","56","8","90","10"]
+  currentPfForGauge=0.20
+  currentInvertersProduction=["0","0","0","0","0","0","0","0","0","0"]
 
 
   invertersChart = {
@@ -36,7 +37,7 @@ export class AppComponent implements AfterViewInit {
         { x: ["inverter 1", "inverter 2", "inverter 3","inverter 4","inverter 5","inverter 6", "inverter 7", "inverter 8","inverter 9","inverter 10"], y: this.currentInvertersProduction, type: 'histogram', histfunc: "sum",marker:{color:"#1b81e8"}},
     ],
     layout: { 
-      title: 'Active power produced by any single inverter',
+      title: ' Inverters Active Power',
       bargap :6,height:document.getElementById("singleActivePowerDiv")?.style.height,
       width:document.getElementById("singleActivePowerDiv")?.style.width,
       paper_bgcolor:"transparent",
@@ -48,7 +49,8 @@ export class AppComponent implements AfterViewInit {
 
       },
       yaxis: {
-        showgrid:false
+        showgrid:true,
+        range: [0, 2000],
       },
       'modebar': {
         'orientation': 'h',
@@ -98,8 +100,10 @@ timeLinePlot={
       titlefont: {
         family: 'Arial, sans-serif',
         size: 18,
-        color: 'lightgrey'
+        color: 'lightgrey',
+       
       },
+      showgrid:false,
       showticklabels: true,
       tickangle: 'auto',
       tickfont: {
@@ -110,7 +114,7 @@ timeLinePlot={
 
     },
     yaxis: {
-      title: 'kW',
+      title: 'MW',
       titlefont: {
         family: 'Arial, sans-serif',
         size: 18,
@@ -139,14 +143,16 @@ QPSignlas={
   layout: {
     title: 'Operating Point',
     font:{size:10,color:'white'},
+    margin:{t:0,l:0,b:0,r:0},
     paper_bgcolor:"transparent",
     plot_bgcolor:"transparent",
     xaxis: {
-      range: [-2, 2],
-      zeroline: false
+      range: [-1.33, 1.33],
+      zeroline: false,
+      dtick:0.33
     },
     yaxis: {
-      range: [0, 1.3]
+      range: [0, 1.2]
     },
     width: document.getElementById("QpSignalsDiv")?.style.width,
     height: document.getElementById("QpSignalsDiv")?.style.height,
@@ -156,10 +162,10 @@ QPSignlas={
         xref: 'x',
         yref: 'y',
         fillcolor: '#0084e4c9',
-        x0: -this.currentNominalPower/20000,
-        y0: -this.currentNominalPower/20000,
-        x1: this.currentNominalPower/20000,
-        y1: this.currentNominalPower/20000,
+        x0: -1.12,
+        y0: -1.12,
+        x1: 1.12,
+        y1: 1.12,
         line: {
           color: '#005d99',
           width:2
@@ -173,7 +179,7 @@ QPSignlas={
         x0: this.currentQTargetPercentage,
         y0: 0,
         x1: this.currentQTargetPercentage,
-        y1: Math.sqrt((this.currentNominalPower/20000)**2-(this.currentQTargetPercentage)**2),
+        y1: Math.sqrt((1.12)**2-(this.currentQTargetPercentage)**2),
         line: {
           dash:'dot',
           color: 'red',
@@ -188,7 +194,7 @@ QPSignlas={
         x0: -this.currentQTargetPercentage,
         y0: 0,
         x1: -this.currentQTargetPercentage,
-        y1: Math.sqrt((this.currentNominalPower/20000)**2-(this.currentQTargetPercentage)**2),
+        y1: Math.sqrt((1.12)**2-(this.currentQTargetPercentage)**2),
         line: {
           dash:'dot',
           color: 'red',
@@ -200,9 +206,9 @@ QPSignlas={
         xref: 'x',
         yref: 'y',
         fillcolor: 'transparent',
-        x0: -Math.sqrt((this.currentNominalPower/20000)**2-(this.currentPTargetPercentage)**2),
+        x0: -Math.sqrt((1.12)**2-(this.currentPTargetPercentage)**2),
         y0: this.currentPTargetPercentage,
-        x1: Math.sqrt((this.currentNominalPower/20000)**2-(this.currentPTargetPercentage)**2),
+        x1: Math.sqrt((1.12)**2-(this.currentPTargetPercentage)**2),
         y1: this.currentPTargetPercentage,
         line: {
           color: '#fbb03b',
@@ -324,7 +330,7 @@ powerFactorGauge=
       type: "indicator",
       mode: "gauge+number",
       gauge: {
-        axis: { range: [-1, 1],tickcolor: "#1b81e8" , showticklabels: true},
+        axis: { range: [-1, 1],tickcolor: "transparentl" , showticklabels: false},
         bar: { color: "transparent" },
         steps: [
           { range: [-1, 0], color: "#448bd4" },
@@ -333,7 +339,7 @@ powerFactorGauge=
         threshold: {
           line: { color: "#fbb03b", width: 4 },
           thickness: 0.75,
-          value: this.currentPF
+          value: this.currentPfForGauge
         }
       }
     }
@@ -418,7 +424,6 @@ gaugeCommonLayout={
     setTimeout(() => {
       this.DivIdList.forEach((item)=>{this.registerDragElement(item)})
       this.DivIdList.forEach((item,index)=>{this.setInitialPositions(item,index+1)})
-      console.log(document.getElementById("singleActivePowerDiv")?.style.height,document.getElementById("singleActivePowerDiv")?.style.width)
       this.invertersChart.layout.height=(String)((Number)(document.getElementById("singleActivePowerDiv")?.offsetHeight))
       this.invertersChart.layout.width=(String)((Number)(document.getElementById("singleActivePowerDiv")?.offsetWidth))
       let chartGaudeOlderElememt=document.getElementById("chartGaugeHolder")
@@ -455,6 +460,7 @@ gaugeCommonLayout={
       currentDiv.style.height=singleDivHeight.toString()+"px"
       currentDiv.style.top=currenTTopSpace.toString()+"px"
       index!=2?currentDiv.style.width=(singleDivHeight*1.8).toString()+"px":currentDiv.style.width=(singleDivHeight*2.3).toString()+"px"
+      if(oldIndex==1){currentDiv.style.width=(singleDivHeight*2.3).toString()+"px"}
       if(oldIndex==3){this.thirdLenght=singleDivHeight*1.8}
       if(oldIndex>3){currentDiv.style.width=(singleDivHeight*2.3).toString()+"px";currentDiv.style.left=(this.thirdLenght+10).toString()+"px";}else{
         currentDiv.style.left=(5).toString()+"px";
@@ -476,16 +482,18 @@ gaugeCommonLayout={
     this.reactivePowerGouge.data[0].value=this.currentReactivePower
     this.reactivePowerGouge.data[0].gauge.threshold.value=this.currentReactivePower
     this.powerFactorGauge.data[0].value=this.currentPF
-    this.powerFactorGauge.data[0].gauge.threshold.value=this.currentPF
+    this.powerFactorGauge.data[0].gauge.threshold.value=this.currentPfForGauge
     /*refreshing qp signals*/
     this.QPSignlas.layout={
       title: 'Operating Point',
+      margin:{t:20,l:20,b:20,r:20},
       font:{size:10,color:'white'},
       paper_bgcolor:"transparent",
       plot_bgcolor:"transparent",
       xaxis: {
-        range: [-2, 2],
-        zeroline: false
+        range: [-1.33, 1.33],
+        zeroline: false,
+        dtick:0.33
       },
       yaxis: {
         range: [0, 1.3]
@@ -498,10 +506,10 @@ gaugeCommonLayout={
           xref: 'x',
           yref: 'y',
           fillcolor: '#0084e4c9',
-          x0: -this.currentNominalPower/20000,
-          y0: -this.currentNominalPower/20000,
-          x1: this.currentNominalPower/20000,
-          y1: this.currentNominalPower/20000,
+          x0: -1.12,
+          y0: -1.12,
+          x1: 1.12,
+          y1: 1.12,
           line: {
             color: '#005d99',
             width:2
@@ -515,7 +523,7 @@ gaugeCommonLayout={
           x0: this.currentQTargetPercentage,
           y0: 0,
           x1: this.currentQTargetPercentage,
-          y1: Math.sqrt((this.currentNominalPower/20000)**2-(this.currentQTargetPercentage)**2),
+          y1: Math.sqrt((1.12)**2-(this.currentQTargetPercentage)**2),
           line: {
             dash:'dot',
             color: 'red',
@@ -530,7 +538,7 @@ gaugeCommonLayout={
           x0: -this.currentQTargetPercentage,
           y0: 0,
           x1: -this.currentQTargetPercentage,
-          y1: Math.sqrt((this.currentNominalPower/20000)**2-(this.currentQTargetPercentage)**2),
+          y1: Math.sqrt((1.12)**2-(this.currentQTargetPercentage)**2),
           line: {
             dash:'dot',
             color: 'red',
@@ -542,9 +550,9 @@ gaugeCommonLayout={
           xref: 'x',
           yref: 'y',
           fillcolor: 'transparent',
-          x0: -Math.sqrt((this.currentNominalPower/20000)**2-(this.currentPTargetPercentage)**2),
+          x0: -Math.sqrt((1.12)**2-(this.currentPTargetPercentage)**2),
           y0: this.currentPTargetPercentage,
-          x1: Math.sqrt((this.currentNominalPower/20000)**2-(this.currentPTargetPercentage)**2),
+          x1: Math.sqrt((1.12)**2-(this.currentPTargetPercentage)**2),
           y1: this.currentPTargetPercentage,
           line: {
             color: '#fbb03b',
@@ -606,6 +614,10 @@ gaugeCommonLayout={
     let newRandomNumber=this.generateRandomInt(5,15)
     this.currentkwPerTime.push(newRandomNumber)
     this.currentkwPerTime.shift()
+    let d=new Date()
+    let stringDateToPush=(String)(d.getMinutes())+":"+(String)(d.getSeconds())+":"+(String)(d.getMilliseconds()).substring(0,1)
+    this.currentTimeLabelsForChart.push(stringDateToPush)
+    this.currentTimeLabelsForChart.shift()
     this.timeLinePlot.data=[
       { x: this.currentTimeLabelsForChart,
         y:this.currentkwPerTime,
@@ -616,7 +628,7 @@ gaugeCommonLayout={
         name:"Power"
       },
       { x: this.currentTimeLabelsForChart,
-        y:[currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget],
+        y:[currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget,currentTarget],
       type: 'scatter',
       mode:'lines+point',
       marker:{color:'#fbb03b'},
@@ -638,12 +650,12 @@ gaugeCommonLayout={
   }
   getNewData(){
     let myData=this.DataService.getCurrentData()
-    console.log(myData)
     this.currentInvertersProduction=[(String)(myData.InvP1),(String)(myData.InvP2),(String)(myData.InvP3),(String)(myData.InvP4),(String)(myData.InvP5),(String)(myData.InvP6),(String)(myData.InvP7),(String)(myData.InvP8),(String)(myData.InvP9),(String)(myData.InvP10)]
     this.currentNominalPower=20000
     this.currentActivePower=myData.P
     this.currentReactivePower=myData.Q
-    this.currentPF=this.generateRandomFloat(0,1)
+    this.currentPF=myData.PF
+    this.currentPfForGauge=myData.PFGauge
     this.currentPTargetPercentage=myData.SetP
     this.currentQTargetPercentage=myData.SetQ
     let now=new Date()
