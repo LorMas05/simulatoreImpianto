@@ -30,7 +30,7 @@ export class AppComponent implements AfterViewInit {
   currentPF=0.45
   currentPfForGauge=0.20
   currentInvertersProduction=["0","0","0","0","0","0","0","0","0","0"]
-
+  currentInvertersTargets=[""]
 
   invertersChart = {
     data: [
@@ -39,8 +39,8 @@ export class AppComponent implements AfterViewInit {
     ],
     layout: { 
       title: ' Inverters Active Power',
-      bargap :6,height:document.getElementById("singleActivePowerDiv")?.style.height,
-      width:document.getElementById("singleActivePowerDiv")?.style.width,
+      bargap :6,height:(String)((Number)(document.getElementById("singleActivePowerDiv")?.offsetHeight)),
+      width:(String)((Number)(document.getElementById("singleActivePowerDiv")?.offsetWidth)),
       paper_bgcolor:"transparent",
       plot_bgcolor:"transparent",
       margin:{t:25,b:30},
@@ -53,10 +53,148 @@ export class AppComponent implements AfterViewInit {
         showgrid:true,
         range: [0, 2000],
       },
-      'modebar': {
-        'orientation': 'h',
-        xanchor:"center"
-    }
+      shapes: [
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: -0.4,
+          y0: 1000,
+          x1: 0.4,
+          y1: 1000,
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 0.6,
+          y0: 1000,
+          x1: 1.4,
+          y1: 1000,
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 1.6,
+          y0: 1000,
+          x1: 2.4,
+          y1: 1000,
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 2.6,
+          y0: 1000,
+          x1: 3.4,
+          y1: 1000,
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 3.6,
+          y0: 1000,
+          x1: 4.4,
+          y1: 1000,
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 4.6,
+          y0: 1000,
+          x1: 5.4,
+          y1: 1000,
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 5.6,
+          y0: 1000,
+          x1: 6.4,
+          y1: 1000,
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 6.6,
+          y0: 1000,
+          x1: 7.4,
+          y1: 1000,
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 7.6,
+          y0: 1000,
+          x1: 8.4,
+          y1: 1000,
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 8.6,
+          y0: 1000,
+          x1: 9.4,
+          y1: 1000,
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+      ],
     },
     config:{
       displayModeBar: false,
@@ -253,6 +391,34 @@ QPSignlas={
         y0: this.currentPTargetPercentage+0.02,
         x1: this.currentQTargetPercentage-0.02,
         y1: this.currentPTargetPercentage-0.02,
+        line: {
+          color: 'red',
+          width:3
+        }
+      },
+      {
+        type: 'line',
+        xref: 'x',
+        yref: 'y',
+        fillcolor: 'transparent',
+        x0: 0,
+        y0: 0,
+        x1: 4,
+        y1: 2,
+        line: {
+          color: 'red',
+          width:3
+        }
+      },
+      {
+        type: 'line',
+        xref: 'x',
+        yref: 'y',
+        fillcolor: 'transparent',
+        x0: 0,
+        y0: 2,
+        x1: 2,
+        y1: 3,
         line: {
           color: 'red',
           width:3
@@ -601,6 +767,48 @@ gaugeCommonLayout={
             color: 'red',
             width:3
           }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: 'transparent',
+          x0: 0,
+          y0: 0,
+          x1: 1.2,
+          y1: 0.3,
+          line: {
+            color: 'blue',
+            width:1
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: 'transparent',
+          x0: 0,
+          y0: 0,
+          x1: -1.2,
+          y1: 0.3,
+          line: {
+            color: 'blue',
+            width:1
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: 'transparent',
+          x0: -1.3,
+          y0: 1,
+          x1: 1.3,
+          y1: 1,
+          line: {
+            color: 'red',
+            width:1
+          }
         }
         
       ]
@@ -612,12 +820,173 @@ gaugeCommonLayout={
     this.invertersChart.data[0].y=this.currentInvertersProduction
     if(this.LightColorSwitch==true){
       this.invertersChart.data[0].marker.color=["#1b81e8", "dbc5c5b5","#1b81e8", "#1b81e8", "dbc5c5b5","#1b81e8","#1b81e8","#1b81e8","#1b81e8","#1b81e8"]
-      console.log("fhdjhghuj")
     }else{
       this.invertersChart.data[0].marker.color=["#1b81e8", "cb0c0cb5","#1b81e8", "#1b81e8","cb0c0cb5","#1b81e8","#1b81e8","#1b81e8","#1b81e8","#1b81e8"]
-      console.log("nnn")
     }
     this.LightColorSwitch=!this.LightColorSwitch
+    this.invertersChart.layout={ 
+      title: ' Inverters Active Power',
+      bargap :6,height:(String)((Number)(document.getElementById("singleActivePowerDiv")?.offsetHeight)),
+      width:(String)((Number)(document.getElementById("singleActivePowerDiv")?.offsetWidth)),
+      paper_bgcolor:"transparent",
+      plot_bgcolor:"transparent",
+      margin:{t:25,b:30},
+      font: {size: 8,color:"white"},
+      xaxis: {
+       showgrid:false
+
+      },
+      yaxis: {
+        showgrid:true,
+        range: [0, 2000],
+      },
+      shapes: [
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: -0.4,
+          y0: parseInt(this.currentInvertersTargets[0]),
+          x1: 0.4,
+          y1: parseInt(this.currentInvertersTargets[0]),
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 0.6,
+          y0: parseInt(this.currentInvertersTargets[1]),
+          x1: 1.4,
+          y1: parseInt(this.currentInvertersTargets[1]),
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 1.6,
+          y0: parseInt(this.currentInvertersTargets[2]),
+          x1: 2.4,
+          y1: parseInt(this.currentInvertersTargets[2]),
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 2.6,
+          y0: parseInt(this.currentInvertersTargets[3]),
+          x1: 3.4,
+          y1: parseInt(this.currentInvertersTargets[3]),
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 3.6,
+          y0: parseInt(this.currentInvertersTargets[4]),
+          x1: 4.4,
+          y1: parseInt(this.currentInvertersTargets[4]),
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 4.6,
+          y0: parseInt(this.currentInvertersTargets[5]),
+          x1: 5.4,
+          y1: parseInt(this.currentInvertersTargets[5]),
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 5.6,
+          y0: parseInt(this.currentInvertersTargets[6]),
+          x1: 6.4,
+          y1: parseInt(this.currentInvertersTargets[6]),
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 6.6,
+          y0: parseInt(this.currentInvertersTargets[7]),
+          x1: 7.4,
+          y1: parseInt(this.currentInvertersTargets[7]),
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 7.6,
+          y0: parseInt(this.currentInvertersTargets[8]),
+          x1: 8.4,
+          y1: parseInt(this.currentInvertersTargets[8]),
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+        {
+          type: 'line',
+          xref: 'x',
+          yref: 'y',
+          fillcolor: '#0084e4c9',
+          x0: 8.6,
+          y0: parseInt(this.currentInvertersTargets[9]),
+          x1: 9.4,
+          y1: parseInt(this.currentInvertersTargets[9]),
+          line: {
+            color: 'orange',
+            width:4
+          }
+        },
+      ],
+    }
+
+
+
+
     /*refreshing inverters End*/
     let currentTarget=this.currentNominalPower*this.currentPTargetPercentage/1000
     let newRandomNumber=this.generateRandomInt(5,15)
@@ -660,6 +1029,7 @@ gaugeCommonLayout={
   getNewData(){
     let myData=this.DataService.getCurrentData()
     this.currentInvertersProduction=[(String)(myData.InvP1),(String)(myData.InvP2),(String)(myData.InvP3),(String)(myData.InvP4),(String)(myData.InvP5),(String)(myData.InvP6),(String)(myData.InvP7),(String)(myData.InvP8),(String)(myData.InvP9),(String)(myData.InvP10)]
+    this.currentInvertersTargets=[(String)(myData.invP1SP),(String)(myData.invP2SP),(String)(myData.invP3SP),(String)(myData.invP4SP),(String)(myData.invP5SP),(String)(myData.invP6SP),(String)(myData.invP7SP),(String)(myData.invP8SP),(String)(myData.invP9Sp),(String)(myData.invP10Sp)]
     this.currentNominalPower=20000
     this.currentActivePower=myData.P
     this.currentReactivePower=myData.Q
