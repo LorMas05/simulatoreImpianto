@@ -13,6 +13,7 @@ export class AppComponent implements AfterViewInit {
   title = 'simulatoreImpianto';
   idOfMovableItems:string[]=[]
   thirdLenght=0
+  focusStatus=true
   DivIdList:string[]=["singleActivePowerDiv","PlantActivePowerDiv","QpSignalsDiv","ActivePowerPlantPlotDiv"]
   /*variables that are used for logic of components view*/
   analyticsVisible=false
@@ -233,8 +234,8 @@ timeLinePlot={
     width:document.getElementById("ActivePowerPlantPlotDiv")?.style.width,
     paper_bgcolor:"transparent",
     plot_bgcolor:"transparent",
-    margin:{t:20,b:20},
-    font: {size: 8,color:"white"},
+    margin:{t:25,b:20},
+    font: {size: 10 ,color:"white"},
     xaxis: {
       titlefont: {
         family: 'Arial, sans-serif',
@@ -282,7 +283,7 @@ QPSignlas={
   layout: {
     title: 'Operating Point',
     font:{size:10,color:'white'},
-    margin:{t:0,l:0,b:0,r:0},
+    margin:{t:15,l:0,b:0,r:0},
     paper_bgcolor:"transparent",
     plot_bgcolor:"transparent",
     xaxis: {
@@ -637,7 +638,42 @@ gaugeCommonLayout={
   SettingsClicked(){
     this.showSettings=!this.showSettings
   }
+  singleDivFocused(idPosition:number){
+    this.focusStatus=!this.focusStatus
+    if(!this.focusStatus){
+      let currentId=this.DivIdList[idPosition]
+      this.DivIdList.forEach((id,index)=>{
+        this.setInitialPositions(id,index+1)
+        let currentDiv=document.getElementById(id)
+        if(currentDiv){
+        currentDiv.style.zIndex="unset"
+        currentDiv.style.visibility="hidden"
+        }else{
+          console.log("fdshkj")
+        }
+      })
+      let currentDiv=document.getElementById(currentId)
+      
+      if( currentDiv){
+        currentDiv.style.height=(window.innerHeight-110).toString()+"px"
+        currentDiv.style.width=(window.innerWidth-10).toString()+"px"
+        currentDiv.style.zIndex="200"
+        currentDiv.style.visibility="visible"
+        currentDiv.style.top="105px"
+        currentDiv.style.left="5px"
+      }
+    }else{
+      this.DivIdList.forEach((id,index)=>{
+        this.setInitialPositions(id,index+1)
+        let currentDiv=document.getElementById(id)
+        if(currentDiv){
+        currentDiv.style.zIndex="unset"
+        currentDiv.style.visibility="visible"
+        }
+      })
 
+    }
+  }
 
 
 
@@ -653,7 +689,7 @@ gaugeCommonLayout={
     /*refreshing qp signals*/
     this.QPSignlas.layout={
       title: 'Operating Point',
-      margin:{t:20,l:20,b:20,r:20},
+      margin:{t:30,l:20,b:20,r:20},
       font:{size:10,color:'white'},
       paper_bgcolor:"transparent",
       plot_bgcolor:"transparent",
@@ -758,11 +794,11 @@ gaugeCommonLayout={
           type: 'circle',
           xref: 'x',
           yref: 'y',
-          fillcolor: 'transparent',
-          x0: this.currentQTargetPercentage+0.02,
-          y0: this.currentPTargetPercentage+0.02,
-          x1: this.currentQTargetPercentage-0.02,
-          y1: this.currentPTargetPercentage-0.02,
+          fillcolor: 'red',
+          x0: this.currentQTargetPercentage+0.002,
+          y0: this.currentPTargetPercentage+0.002,
+          x1: this.currentQTargetPercentage-0.002,
+          y1: this.currentPTargetPercentage-0.002,
           line: {
             color: 'red',
             width:3
@@ -1020,6 +1056,11 @@ gaugeCommonLayout={
       name:""
       },
   ]
+  let chartTimeLineElement =document.getElementById("ActivePowerPlantPlotDiv")
+  if(chartTimeLineElement){
+    this.timeLinePlot.layout.height=(String)((Number)(chartTimeLineElement.offsetHeight))
+    this.timeLinePlot.layout.width=(String)((Number)(chartTimeLineElement.offsetWidth))
+  }
 
     setTimeout(() => {
       this.getNewData()
