@@ -69,6 +69,9 @@ MIT
 angular-plotly.js
 MIT
 
+angular-resize-event
+MIT
+
 plotly.js-dist-min
 MIT
 The MIT License (MIT)
