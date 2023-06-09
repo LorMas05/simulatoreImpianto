@@ -62,9 +62,8 @@
   background-color: #1569a7;  
   min-height: 200px;
   min-width: 300px;
-}
-.analyticContainerDiv:hover{
-    cursor: grab;
+  z-index: 10;
+
 }
 .buttonHolderForMovableDiv{
     display: flex;
@@ -219,4 +218,18 @@
     background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
+    resize: both;
+    overflow: auto;
+  }
+  .dragArea{
+    position: absolute;
+    left: 10%;
+    top:10%;
+    height: 80%;
+    width: 80%;
+    z-index: 101;
+
+  }
+  .dragArea:hover{
+    cursor: grab;
   }

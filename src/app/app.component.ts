@@ -568,9 +568,10 @@ gaugeCommonLayout={
       document.onmouseup = null;
       document.onmousemove = null;
     };
-
-    if(elmnt){
-      elmnt.onmousedown = dragMouseDown;
+    /*reducind drag area to 80%*/
+    let toDragElement=document.getElementById(elementId+"Drag")
+    if(toDragElement){
+      toDragElement.onmousedown = dragMouseDown;
     }
    
   }
@@ -615,6 +616,13 @@ gaugeCommonLayout={
     }, 0);
 
   }
+  resizedcover(toResizeId:string,ev:any){
+    let toResizeel=document.getElementById(toResizeId)
+    if(toResizeel){
+      toResizeel.style.height=(ev.newRect.height).toString()+"px"
+      toResizeel.style.width=(ev.newRect.width).toString()+"px"
+    }
+  }
   setInitialPositions(divId:string,index:number){
     let oldIndex=index
     let height=window.innerHeight
@@ -633,6 +641,12 @@ gaugeCommonLayout={
       if(oldIndex>3){currentDiv.style.width=(singleDivHeight*2.3).toString()+"px";currentDiv.style.left=(this.thirdLenght+10).toString()+"px";}else{
         currentDiv.style.left=(5).toString()+"px";
       }
+
+      let coverElem=document.getElementById(divId+"Cover")
+      if(coverElem){
+        coverElem.style.height=currentDiv.style.height
+        coverElem.style.width=currentDiv.style.width
+      }
     }
   }
   SettingsClicked(){
@@ -646,10 +660,10 @@ gaugeCommonLayout={
         this.setInitialPositions(id,index+1)
         let currentDiv=document.getElementById(id)
         if(currentDiv){
-        currentDiv.style.zIndex="unset"
-        currentDiv.style.visibility="hidden"
+        currentDiv.style.zIndex="10"
+        currentDiv.style.visibility="visible"
         }else{
-          console.log("fdshkj")
+          console.log("div not found")
         }
       })
       let currentDiv=document.getElementById(currentId)
@@ -661,13 +675,20 @@ gaugeCommonLayout={
         currentDiv.style.visibility="visible"
         currentDiv.style.top="105px"
         currentDiv.style.left="5px"
+
+        /*adjust cover size*/
+        let coverElem=document.getElementById(currentId+"Cover")
+        if(coverElem){
+          coverElem.style.height=currentDiv.style.height
+          coverElem.style.width=currentDiv.style.width
+        }
       }
     }else{
       this.DivIdList.forEach((id,index)=>{
         this.setInitialPositions(id,index+1)
         let currentDiv=document.getElementById(id)
         if(currentDiv){
-        currentDiv.style.zIndex="unset"
+        currentDiv.style.zIndex="10"
         currentDiv.style.visibility="visible"
         }
       })
