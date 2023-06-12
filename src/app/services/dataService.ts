@@ -5,7 +5,7 @@ import *as XLSX from 'xlsx'
   providedIn: 'root',
 })
 export class DataService {
-    loopDuration=30
+    loopDuration=360
     GlobalData:any[]=[]
     currentData:any={}
     counter:number=0
