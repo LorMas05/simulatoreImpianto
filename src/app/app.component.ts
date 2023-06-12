@@ -19,6 +19,7 @@ export class AppComponent implements AfterViewInit {
   analyticsVisible=false
   settingsVisible=false
   showSettings=false
+  calendarVisible=false
   LightColorSwitch=true
   /*variables that are used for logic of components view*/
   currentTimeLabelsForChart=["starting1","starting2","starting3","starting4","starting5","starting6","starting7","starting8","starting9","starting10",]
@@ -32,7 +33,8 @@ export class AppComponent implements AfterViewInit {
   currentPfForGauge=0.20
   currentInvertersProduction=["0","0","0","0","0","0","0","0","0","0"]
   currentInvertersTargets=[""]
-
+  currentMessage=""
+  isMessageActive=false
   invertersChart = {
     data: [
         { x: ["inverter 1", "inverter 2", "inverter 3","inverter 4","inverter 5","inverter 6", "inverter 7", "inverter 8","inverter 9","inverter 10"], y: this.currentInvertersProduction, type: 'histogram', histfunc: "sum",
@@ -536,7 +538,6 @@ gaugeCommonLayout={
 
   private registerDragElement(elementId:string) {
     const elmnt = document.getElementById(elementId);
-
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
     const dragMouseDown = (e:any) => {
@@ -591,6 +592,7 @@ gaugeCommonLayout={
   }
   restartDivs(){
     setTimeout(() => {
+      this.registerDragElement("messagebox")
       this.DivIdList.forEach((item)=>{this.registerDragElement(item)})
       this.DivIdList.forEach((item,index)=>{this.setInitialPositions(item,index+1)})
       this.invertersChart.layout.height=(String)((Number)(document.getElementById("singleActivePowerDiv")?.offsetHeight))
@@ -1099,6 +1101,12 @@ gaugeCommonLayout={
     this.currentPfForGauge=myData.PFGauge
     this.currentPTargetPercentage=myData.SetP
     this.currentQTargetPercentage=myData.SetQ
+    this.currentMessage=myData.messages
+    if(this.currentMessage && this.currentMessage!=""){
+      this.isMessageActive=true
+    }else{
+      this.isMessageActive=false
+    }
     let now=new Date()
 
     this.simulateGetData()
@@ -1113,5 +1121,8 @@ gaugeCommonLayout={
     this.DataService.read(event)
       
   }
-  
+  getCurrentTime(){
+    let currentTime=new Date().getFullYear().toString()+"/"+new Date().getMonth().toString()+"/"+new Date().getDate().toString()+" "+new Date().getHours().toString()+":"+new Date().getMinutes().toString()
+    return currentTime
+  }
 }

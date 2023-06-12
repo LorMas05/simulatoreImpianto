@@ -233,3 +233,85 @@
   .dragArea:hover{
     cursor: grab;
   }
+
+  .timeProductionContainer{
+    height: 100%;
+    top: 100px;
+    width: 98%;
+    position: absolute;
+    /* top: 0; */
+    left: 0;
+    background-color: #00417e;
+    padding-top: 5px;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    padding-left: 30px;
+    z-index: 301;
+  }
+  .schedulerTitleContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    /* position: relative; */
+    top: 110px;
+    left: 133px;
+    color: white;
+  }
+  .imageHolder{
+    width: 78px;
+    height: 91px; 
+  }
+  .calendarIcon{
+    font-size: 70px;
+    height: 100px;
+    width: 100px;
+  }
+  .longDiv{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+  .bigButton{
+    width: 200px !important;
+    height: 43px;
+    font-size: 14px;
+  }
+  .selectedButton{
+    background-color: #1569a7;
+    border-color: #1569a7;
+  }
+  .tableComponent{
+    width: 100%;
+    height: 100%;
+    overflow-y: hidden;
+  }
+  .messagebox{
+    position: absolute;
+    right: 50px;
+    top: 150px;
+    height: 70px;
+    width: 383px;
+    background-color: rgba(31, 144, 217, 0.6);
+    color: white;
+    text-align: left;
+    font-size: 17px;
+    word-wrap: break-word;
+    white-space: initial;
+    padding: 11px;
+    padding-left: 80px;
+    z-index: 300;
+  }
+  .messageIcon{
+    position: absolute;
+    height: 77px;
+    width: 77px;
+    font-size: 76px;
+    align-self: center;
+    bottom: 5px;
+    left: 0px;
+    color: #ffffff82;
+  }

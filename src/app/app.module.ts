@@ -10,11 +10,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SettingsComponent } from './SettingsComponent';
 import { AngularResizeEventModule } from 'angular-resize-event';
+import {MatIconModule} from '@angular/material/icon';
+import { tableComponent } from './tableComponent';
 PlotlyModule.plotlyjs = PlotlyJS;
 @NgModule({
   declarations: [
     AppComponent,
-    SettingsComponent
+    SettingsComponent,
+    tableComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     BrowserAnimationsModule,
     MatSliderModule,
     HttpClientModule,
-    AngularResizeEventModule
+    AngularResizeEventModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

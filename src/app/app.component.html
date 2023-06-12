@@ -7,17 +7,36 @@
       <div class="buttonContainer">
         <button class="customButton longButton" (click)="analyticsVisible=!analyticsVisible;restartDivs()">Analytics</button>
         <button class="customButton longButton" (click)="SettingsClicked()">Settings</button>
-        <button class="customButton">C</button>
+        <button class="customButton" (click)="calendarVisible=!calendarVisible"><mat-icon >calendar_today</mat-icon></button>
         
       </div>
       
   
     </div>
+    <div class="timeProductionContainer" *ngIf="calendarVisible">
+      <div class="schedulerTitleContainer">
+        <div class="imageHolder">	<mat-icon class="calendarIcon">calendar_today</mat-icon></div>
+        <div class="verticalFlex">
+          <h1>Time production scheduling</h1>
+          <h5>Current Time :{{getCurrentTime()}}</h5>
+        </div>
+        
+      </div>
+      <div class="longDiv">
+        <button class="customButton longButton bigButton selectedButton" >Production</button>
+        <button class="customButton longButton bigButton " >Fast Reserver</button>
+      </div>
+      <table-component class="tableComponent"></table-component>
+    </div>
     <div *ngIf="showSettings" class="sideComponentForSettings">
       <settings-component  class="importedSettingsComponent"></settings-component>
     </div>
 
-  
+    <div id="messagebox" class="messagebox" *ngIf="analyticsVisible ">
+      <div id="messageboxDrag" class="dragArea"></div>
+      <mat-icon class="messageIcon"> message</mat-icon>
+      {{currentMessage}}
+    </div>
     <div id="singleActivePowerDiv" class="analyticContainerDiv" *ngIf="analyticsVisible">
       <div class="coverIndex" id="singleActivePowerDivCover" (resized)="resizedcover('singleActivePowerDiv',$event)"></div>
       <div id="singleActivePowerDivDrag" class="dragArea"></div>
