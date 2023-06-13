@@ -1093,6 +1093,8 @@ gaugeCommonLayout={
     let now=new Date()
 
     this.simulateGetData()
+  }else{
+    this.DataService.counter=0
   }
   }
   generateRandomInt(min:number,max:number){
