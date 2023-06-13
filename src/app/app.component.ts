@@ -1053,6 +1053,7 @@ gaugeCommonLayout={
   }
   getNewData(){
     let myData=this.DataService.getCurrentData()
+    console.log(myData)
     if(myData){
       if(!myData.InvP1){myData.InvP1=0}
       if(!myData.InvP2){myData.InvP2=0}
@@ -1094,7 +1095,9 @@ gaugeCommonLayout={
 
     this.simulateGetData()
   }else{
+    console.log("fhhfdjjh")
     this.DataService.counter=0
+    this.getNewData()
   }
   }
   generateRandomInt(min:number,max:number){
