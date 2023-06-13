@@ -32,7 +32,7 @@
       <settings-component  class="importedSettingsComponent"></settings-component>
     </div>
 
-    <div id="messagebox" class="messagebox" *ngIf="analyticsVisible ">
+    <div id="messagebox" class="messagebox" *ngIf="analyticsVisible  && isMessageActive">
       <div id="messageboxDrag" class="dragArea"></div>
       <mat-icon class="messageIcon"> message</mat-icon>
       {{currentMessage}}

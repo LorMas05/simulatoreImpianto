@@ -25,6 +25,7 @@ export class AppComponent implements AfterViewInit {
   currentTimeLabelsForChart=["starting1","starting2","starting3","starting4","starting5","starting6","starting7","starting8","starting9","starting10",]
   currentkwPerTime=[0,0,0,0,0,0,0,0,0,0]
   currentNominalPower=24500
+  currentPower=0
   currentQTargetPercentage=0.5
   currentPTargetPercentage=0.5
   currentActivePower=12250
@@ -38,7 +39,7 @@ export class AppComponent implements AfterViewInit {
   invertersChart = {
     data: [
         { x: ["inverter 1", "inverter 2", "inverter 3","inverter 4","inverter 5","inverter 6", "inverter 7", "inverter 8","inverter 9","inverter 10"], y: this.currentInvertersProduction, type: 'histogram', histfunc: "sum",
-        marker:{color:["red", '"red",, "red", "red", "red"',"red","red","red","red","red"]}},
+        marker:{color:["#1b81e8", "#1b81e8", "#1b81e8", "#1b81e8", "#1b81e8","#1b81e8","#1b81e8","#1b81e8","#1b81e8","#1b81e8"]}},
     ],
     layout: { 
       title: ' Inverters Active Power',
@@ -246,7 +247,7 @@ timeLinePlot={
        
       },
       showgrid:false,
-      showticklabels: true,
+      showticklabels: false,
       tickangle: 'auto',
       tickfont: {
         family: 'Old Standard TT, serif',
@@ -746,50 +747,6 @@ gaugeCommonLayout={
           xref: 'x',
           yref: 'y',
           fillcolor: 'transparent',
-          x0: this.currentQTargetPercentage,
-          y0: 0,
-          x1: this.currentQTargetPercentage,
-          y1: Math.sqrt((1.12)**2-(this.currentQTargetPercentage)**2),
-          line: {
-            dash:'dot',
-            color: 'red',
-            width:1
-          }
-        },
-        {
-          type: 'rect',
-          xref: 'x',
-          yref: 'y',
-          fillcolor: 'transparent',
-          x0: -this.currentQTargetPercentage,
-          y0: 0,
-          x1: -this.currentQTargetPercentage,
-          y1: Math.sqrt((1.12)**2-(this.currentQTargetPercentage)**2),
-          line: {
-            dash:'dot',
-            color: 'red',
-            width:1
-          }
-        },
-        {
-          type: 'rect',
-          xref: 'x',
-          yref: 'y',
-          fillcolor: 'transparent',
-          x0: -Math.sqrt((1.12)**2-(this.currentPTargetPercentage)**2),
-          y0: this.currentPTargetPercentage,
-          x1: Math.sqrt((1.12)**2-(this.currentPTargetPercentage)**2),
-          y1: this.currentPTargetPercentage,
-          line: {
-            color: '#fbb03b',
-            width:2
-          }
-        },
-        {
-          type: 'rect',
-          xref: 'x',
-          yref: 'y',
-          fillcolor: 'transparent',
           x0: 0,
           y0: 0,
           x1: 0,
@@ -818,10 +775,10 @@ gaugeCommonLayout={
           xref: 'x',
           yref: 'y',
           fillcolor: 'red',
-          x0: this.currentQTargetPercentage+0.002,
-          y0: this.currentPTargetPercentage+0.002,
-          x1: this.currentQTargetPercentage-0.002,
-          y1: this.currentPTargetPercentage-0.002,
+          x0: this.currentQTargetPercentage+0.02,
+          y0: this.currentPTargetPercentage+0.02,
+          x1: this.currentQTargetPercentage-0.02,
+          y1: this.currentPTargetPercentage-0.02,
           line: {
             color: 'red',
             width:3
@@ -877,12 +834,12 @@ gaugeCommonLayout={
     let newArrayOfInverters=[]
 
     this.invertersChart.data[0].y=this.currentInvertersProduction
-    if(this.LightColorSwitch==true){
-      this.invertersChart.data[0].marker.color=["#1b81e8", "dbc5c5b5","#1b81e8", "#1b81e8", "dbc5c5b5","#1b81e8","#1b81e8","#1b81e8","#1b81e8","#1b81e8"]
-    }else{
-      this.invertersChart.data[0].marker.color=["#1b81e8", "cb0c0cb5","#1b81e8", "#1b81e8","cb0c0cb5","#1b81e8","#1b81e8","#1b81e8","#1b81e8","#1b81e8"]
-    }
-    this.LightColorSwitch=!this.LightColorSwitch
+    // if(this.LightColorSwitch==true){
+    //   this.invertersChart.data[0].marker.color=["#1b81e8", "dbc5c5b5","#1b81e8", "#1b81e8", "dbc5c5b5","#1b81e8","#1b81e8","#1b81e8","#1b81e8","#1b81e8"]
+    // }else{
+    //   this.invertersChart.data[0].marker.color=["#1b81e8", "cb0c0cb5","#1b81e8", "#1b81e8","cb0c0cb5","#1b81e8","#1b81e8","#1b81e8","#1b81e8","#1b81e8"]
+    // }
+    // this.LightColorSwitch=!this.LightColorSwitch
     this.invertersChart.layout={ 
       title: ' Inverters Active Power',
       bargap :6,height:(String)((Number)(document.getElementById("singleActivePowerDiv")?.offsetHeight)),
@@ -1048,8 +1005,12 @@ gaugeCommonLayout={
 
     /*refreshing inverters End*/
     let currentTarget=this.currentNominalPower*this.currentPTargetPercentage/1000
-    let newRandomNumber=this.generateRandomInt(5,15)
-    this.currentkwPerTime.push(newRandomNumber)
+    let currentkwToPush=0
+    this.currentInvertersProduction.forEach((inverter)=>{
+      let inverterProd=parseFloat(inverter)
+      currentkwToPush+=inverterProd
+    })
+    this.currentkwPerTime.push(currentkwToPush/1000)
     this.currentkwPerTime.shift()
     let d=new Date()
     let stringDateToPush=(String)(d.getMinutes())+":"+(String)(d.getSeconds())+":"+(String)(d.getMilliseconds()).substring(0,1)
