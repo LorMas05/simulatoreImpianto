@@ -39,6 +39,7 @@ export class DataService {
     startLoopData(){
         this.currentData=this.GlobalData[this.counter]
         this.counter++
+        console.log(this.counter)
         if(this.counter>this.loopDuration){this.counter=0}
         setTimeout(() => {
             this.reLoop() 

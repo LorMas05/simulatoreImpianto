@@ -1097,7 +1097,9 @@ gaugeCommonLayout={
   }else{
     console.log("fhhfdjjh")
     this.DataService.counter=0
-    this.getNewData()
+    setTimeout(() => {
+      this.getNewData()
+    }, 500);
   }
   }
   generateRandomInt(min:number,max:number){
