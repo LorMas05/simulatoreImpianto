@@ -1053,6 +1053,26 @@ gaugeCommonLayout={
   }
   getNewData(){
     let myData=this.DataService.getCurrentData()
+    if(!myData.InvP1){myData.InvP1=0}
+    if(!myData.InvP2){myData.InvP2=0}
+    if(!myData.InvP3){myData.InvP3=0}
+    if(!myData.InvP4){myData.InvP4=0}
+    if(!myData.InvP5){myData.InvP5=0}
+    if(!myData.InvP6){myData.InvP6=0}
+    if(!myData.InvP7){myData.InvP7=0}
+    if(!myData.InvP8){myData.InvP8=0}
+    if(!myData.InvP9){myData.InvP9=0}
+    if(!myData.InvP10){myData.InvP10=0}
+    if(!myData.invP1SP){myData.invP1SP=0}
+    if(!myData.invP2SP){myData.invP2SP=0}
+    if(!myData.invP3SP){myData.invP3SP=0}
+    if(!myData.invP4SP){myData.invP4SP=0}
+    if(!myData.invP5SP){myData.invP5SP=0}
+    if(!myData.invP6SP){myData.invP6SP=0}
+    if(!myData.invP7SP){myData.invP7SP=0}
+    if(!myData.invP8SP){myData.invP8SP=0}
+    if(!myData.invP9Sp){myData.invP9Sp=0}
+    if(!myData.invP10Sp){myData.invP10Sp=0}
     this.currentInvertersProduction=[(String)(myData.InvP1),(String)(myData.InvP2),(String)(myData.InvP3),(String)(myData.InvP4),(String)(myData.InvP5),(String)(myData.InvP6),(String)(myData.InvP7),(String)(myData.InvP8),(String)(myData.InvP9),(String)(myData.InvP10)]
     this.currentInvertersTargets=[(String)(myData.invP1SP),(String)(myData.invP2SP),(String)(myData.invP3SP),(String)(myData.invP4SP),(String)(myData.invP5SP),(String)(myData.invP6SP),(String)(myData.invP7SP),(String)(myData.invP8SP),(String)(myData.invP9Sp),(String)(myData.invP10Sp)]
     this.currentNominalPower=20000
