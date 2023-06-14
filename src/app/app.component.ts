@@ -25,6 +25,7 @@ export class AppComponent implements AfterViewInit {
   currentTimeLabelsForChart=["starting1","starting2","starting3","starting4","starting5","starting6","starting7","starting8","starting9","starting10",]
   currentkwPerTime=[0,0,0,0,0,0,0,0,0,0]
   currentNominalPower=24500
+  currentSpeed=500
   currentPower=0
   currentQTargetPercentage=0.5
   currentPTargetPercentage=0.5
@@ -1115,5 +1116,10 @@ gaugeCommonLayout={
   getCurrentTime(){
     let currentTime=new Date().getFullYear().toString()+"/"+new Date().getMonth().toString()+"/"+new Date().getDate().toString()+" "+new Date().getHours().toString()+":"+new Date().getMinutes().toString()
     return currentTime
+  }
+  modifiedSpeed(ev:any){
+    let val=ev.target.value
+    this.currentSpeed=val
+    this.DataService.currentSpeed=val
   }
 }

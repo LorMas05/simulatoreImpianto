@@ -5,8 +5,10 @@
     <div class="topbar">
       <div class="wisnamLogo"></div>
       <div class="buttonContainer">
+        <input class="customButton shortButton" (change)="modifiedSpeed($event)"  value="500">
         <button class="customButton longButton" (click)="analyticsVisible=!analyticsVisible;restartDivs()">Analytics</button>
         <button class="customButton longButton" (click)="SettingsClicked()">Settings</button>
+        
         <button class="customButton" (click)="calendarVisible=!calendarVisible"><mat-icon >calendar_today</mat-icon></button>
         
       </div>

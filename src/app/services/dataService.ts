@@ -9,6 +9,7 @@ export class DataService {
     GlobalData:any[]=[]
     currentData:any={}
     counter:number=0
+    currentSpeed:number=500
   constructor(private httpClient: HttpClient) { }
 
   read(event:any) {
@@ -43,7 +44,7 @@ export class DataService {
         if(this.counter>this.loopDuration){this.counter=0}
         setTimeout(() => {
             this.reLoop() 
-        }, 500);
+        }, this.currentSpeed);
         
     }
     reLoop(){
